@@ -6,27 +6,27 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:43:40 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/14 17:26:57 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/19 16:46:15 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_push_swap.h"
+#include "ft_push_swap.h"
 
 int	main(int argc, char **argv)
 {
-	t_stack	stacks[2];
+	t_data	data;
 
 	if (argc == 1)
 		return (0);
+	printf("Parsing starts\n");
 	if (!ft_parser(argc, argv))
 		write(STDERR_FILENO, "Error\n", 6);
-	else if (ft_init_stacks(argc, argv, stacks))
+	else if (ft_init_data(argc, argv, &data))
 	{
-		if (ft_duplicated_nb(&stacks[s_a]))
+		printf("Parsing completed\n");
+		if (!ft_sort(&data))
 			write(STDERR_FILENO, "Error\n", 6);
-		else
-			ft_sort(stacks);
-		ft_free_stacks(stacks);
+		ft_free_data(&data);
 	}
 	else
 		write(STDERR_FILENO, "Error\n", 6);

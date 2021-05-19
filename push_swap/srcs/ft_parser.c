@@ -6,31 +6,71 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:59:04 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/14 17:37:21 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/19 16:43:42 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_push_swap.h"
+#include "ft_push_swap.h"
 
-bool	ft_duplicated_nb(t_stack *stack_a)
-{
-	int	i;
-	int	j;
+// bool	ft_duplicated_nb(t_stack *s_a)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (i < stack_a->size)
-	{
-		j = i + 1;
-		while (j < stack_a->size)
-		{
-			if (stack_a->stack[i] == stack_a->stack[j])
-				return (true);
-			j++;
-		}
-		i++;
-	}
-	return (false);
-}
+// 	i = 0;
+// 	printf("Check duplicated starts\n");
+// 	while (i < s_a->size)
+// 	{
+// 		j = i + 1;
+// 		while (j < s_a->size)
+// 		{
+// 			if (s_a->stack[i].nb == s_a->stack[j].nb)
+// 				return (true);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	printf("Check duplicated completed\n");
+// 	return (false);
+// }
+
+// bool	ft_duplicated_nb(t_stack *s_a)
+// {
+// 	char	*pos_hash;
+// 	char	*neg_hash;
+// 	int		i;
+// 	int		curr_nb;
+
+// 	printf("CHECK DUPLICATES starts\n");
+// 	pos_hash = ft_calloc(INT_MAX + (size_t)1, sizeof(char));
+// 	neg_hash = ft_calloc(INT_MAX + (size_t)1, sizeof(char));
+// 	if (!pos_hash || !neg_hash)
+// 		return (true);
+// 	i = 0;
+// 	while (i < s_a->size)
+// 	{
+// 		curr_nb = s_a->stack[i].nb;
+// 		if (curr_nb >= 0)
+// 		{
+// 			if (pos_hash[curr_nb])
+// 				break;
+// 			pos_hash[curr_nb] = 1;
+// 		}
+// 		else
+// 		{
+// 			if (neg_hash[curr_nb + INT_MAX + 1])
+// 				break;
+// 			neg_hash[curr_nb + INT_MAX + 1] = 1;
+// 		}
+// 		i++;
+// 	}
+// 	free(pos_hash);
+// 	free(neg_hash);
+// 	printf("Check duplicated completed\n");
+// 	if (i != s_a->size)
+// 		return (true);
+// 	return (false);
+// }
 
 static bool	ft_isnumber(char *nb)
 {

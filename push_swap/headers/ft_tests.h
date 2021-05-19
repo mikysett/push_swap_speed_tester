@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:54:02 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/14 17:42:11 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/18 17:00:55 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define FT_TESTS_H
 
 void	ft_print_stack(t_stack *s);
+void	ft_is_sorted(t_stack *s);
 
 #endif

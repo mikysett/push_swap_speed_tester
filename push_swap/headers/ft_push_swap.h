@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/14 15:42:57 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/14 18:37:02 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/18 15:03:56 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <limits.h>
 # include "../libft/libft.h"
 # include "ft_types.h"
 # include "ft_sort.h"
@@ -29,9 +30,9 @@
 # include "ft_tests.h"
 
 bool	ft_parser(int argc, char **argv);
-bool	ft_init_stacks(int argc, char **argv, t_stack *stacks);
+bool	ft_init_data(int argc, char **argv, t_data *data);
 bool	ft_duplicated_nb(t_stack *stack_a);
 
-void	ft_free_stacks(t_stack *stacks);
+void	ft_free_data(t_data *data);
 
 #endif
