@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/19 21:18:56 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/20 11:48:14 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define CLR_RED	"\033[0;31m"
 # define CLR_GREEN	"\033[0;32m"
 
+# define CELL_SIZE	20
+# define BUF_SIZE	10000
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -41,11 +43,21 @@ typedef struct	s_test
 	char	*body;
 }				t_test;
 
+typedef enum	e_check
+{
+	check_ok,
+	check_ko,
+	check_error
+}				t_check;
+
 typedef struct	s_result
 {
-	int		*nb_moves;
-	int		*tot_wins;
-	bool	*is_sorted;
+	int			nb_args;
+	long long	*nb_moves;
+	float		*ratio;
+	int			*tot_wins;
+	bool		*is_winner;
+	t_check		*checker;
 }				t_result;
 
 

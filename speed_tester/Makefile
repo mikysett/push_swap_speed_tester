@@ -6,7 +6,7 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/19 20:34:28 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/20 13:22:22 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ DEPS	=	$(shell find $(HEADERS) -name *.h)
 
 CC		=	gcc
 
-CFLAGS	=	-Wall -Wextra 
+CFLAGS	=	-Wall -Wextra
 
 INCLUDES	= -I $(HEADERS) -I ../push_swap/headers -I ../push_swap/libft
 
@@ -54,7 +54,7 @@ all:		$(NAME)
 
 clean:
 			$(RM) $(OBJS)
-			@make clean -C ../push_swap
+			@make miniclean -C ../push_swap
 
 fclean:		clean
 			$(RM) $(NAME)
