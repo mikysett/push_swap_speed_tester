@@ -6,9 +6,17 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/19 22:13:09 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/21 11:32:01 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+MAKEFLAGS	+=	--quiet
+
+WHT	= \033[0;37m
+BLK	= \033[0;30m
+RED	= \033[0;31m
+YEL	= \033[0;33m
+GRN	= \033[0;32m
 
 NAME	=	push_swap
 
@@ -50,12 +58,14 @@ $(NAME):	$(DEPS) $(OBJS)
 			@make bonus -C $(LIBFT)
 			@make -C ft_checker
 			$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBS)
+			printf "$(WHT)[$(GRN)$(NAME) COMPILED$(WHT)]\n"
 
 all:		$(NAME)
 
 miniclean:
 			$(RM) $(OBJS)
 			$(RM) $(BOBJS)
+			printf "$(WHT)[$(YEL)$(NAME) OBJS REMOVED$(WHT)]\n"
 			@make clean -C ft_checker
 
 clean:		miniclean
@@ -63,6 +73,7 @@ clean:		miniclean
 
 fclean:		clean
 			$(RM) $(NAME)
+			printf "$(WHT)[$(YEL)$(NAME) BINARIES REMOVED$(WHT)]\n"
 			@make fclean -C $(LIBFT)
 			@make fclean -C ft_checker
 

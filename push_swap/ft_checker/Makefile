@@ -6,9 +6,17 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/19 22:09:44 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/21 11:23:10 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+MAKEFLAGS	+=	--quiet
+
+WHT	= \033[0;37m
+BLK	= \033[0;30m
+RED	= \033[0;31m
+YEL	= \033[0;33m
+GRN	= \033[0;32m
 
 NAME	=	../checker
 
@@ -55,14 +63,17 @@ $(DIR_O)/%.o: %.c
 $(NAME):	$(DEPS) $(OBJS)
 			@make bonus -C $(LIBFT)
 			$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBS)
+			printf "$(WHT)[$(GRN)$(NAME) COMPILED$(WHT)]\n"
 
 all:		$(NAME)
 
 clean:
 			$(RM) $(OBJS)
+			printf "$(WHT)[$(YEL)$(NAME) OBJS REMOVED$(WHT)]\n"
 
 fclean:		clean
 			$(RM) $(NAME)
+			printf "$(WHT)[$(YEL)$(NAME) BINARIES REMOVED$(WHT)]\n"
 
 re:			fclean all
 
