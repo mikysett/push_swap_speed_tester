@@ -6,7 +6,7 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/21 22:49:35 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/21 23:10:00 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ $(DIR_O)/%.o: %.c
 $(NAME):	$(DEPS) $(OBJS)
 			@make -C ./$(PUSH_SWAP)
 			$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBS)
+			mv -f ./$(PUSH_SWAP)/checker ./checker
 			printf "$(WHT)[$(GRN)$(NAME) COMPILED$(WHT)]\n"
 
 all:		$(NAME)
@@ -70,6 +71,7 @@ clean:
 
 fclean:		clean
 			$(RM) $(NAME)
+			$(RM) checker
 			printf "$(WHT)[$(YEL)$(NAME) BINARIES REMOVED$(WHT)]\n"
 			@make fclean -C ./$(PUSH_SWAP)
 

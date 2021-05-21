@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/21 17:59:34 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/21 23:05:55 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_check	ft_do_check(char *input, char *ps_output)
 		fwrite(ps_output, 1, strlen(ps_output), checker_buffer);
 	fclose(checker_buffer);
 	command[0] = '\0';
-	strcat(command, "./../push_swap/checker 2>&1 ");
+	strcat(command, "./checker 2>&1 ");
 	strcat(command, input);
 	if (*input != '\0')
 		strcat(command, " < checker_buffer");
