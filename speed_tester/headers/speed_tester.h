@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/20 11:48:14 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/21 14:36:30 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define CLR_BLACK	"\033[0;30m"
 # define CLR_RED	"\033[0;31m"
 # define CLR_GREEN	"\033[0;32m"
+# define CLR_YELLOW	"\033[0;33m"
 
 # define CELL_SIZE	20
 # define BUF_SIZE	10000
@@ -47,7 +48,8 @@ typedef enum	e_check
 {
 	check_ok,
 	check_ko,
-	check_error
+	check_error,
+	check_void
 }				t_check;
 
 typedef struct	s_result
@@ -59,6 +61,26 @@ typedef struct	s_result
 	bool		*is_winner;
 	t_check		*checker;
 }				t_result;
+
+void		ft_free_split(char **args);
+int			ft_count_split(char **args);
+void		ft_init_result(int nb_progs, t_result *result);
+
+char		**ft_files_in_dir(char *path);
+void		ft_sort_files(char **test_files, int nb_tests);
+
+void		ft_init_result(int nb_progs, t_result *result);
+void		ft_free_all(t_result *result, char **test_files, char **prog_files);
+
+void	ft_run_tests(t_result *result,
+		char **test_files,
+		char **prog_files,
+		int nb_tests,
+		int nb_progs);
+
+int			ft_count_args(char *s);
+long long	ft_count_moves(char *s);
+void		ft_print_line(t_result *result, int nb_progs);
 
 
 #endif
