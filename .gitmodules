@@ -1,0 +1,3 @@
+[submodule "speed_tester/push_swap"]
+	path = speed_tester/push_swap
+	url = git@github.com:mikysett/push_swap.git

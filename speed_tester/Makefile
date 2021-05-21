@@ -6,7 +6,7 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/21 11:31:32 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/21 22:49:35 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ GRN	= \033[0;32m
 
 NAME	=	speed_tester
 
-LIBFT	=	../push_swap/libft
+PUSH_SWAP = push_swap/push_swap
+
+LIBFT	=	$(PUSH_SWAP)/libft/libft
 
 HEADERS	=	headers
 
@@ -43,9 +45,9 @@ CC		=	gcc
 
 CFLAGS	=	-Wall -Wextra
 
-INCLUDES	= -I $(HEADERS) -I ../push_swap/headers -I ../push_swap/libft
+INCLUDES	= -I $(HEADERS) -I ./$(PUSH_SWAP)/headers -I ./$(LIBFT)
 
-LIBS	=	-L../push_swap/libft -lft
+LIBS	=	-L./$(LIBFT) -lft
 
 RM		=	rm -f
 
@@ -55,7 +57,7 @@ $(DIR_O)/%.o: %.c
 			$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 $(NAME):	$(DEPS) $(OBJS)
-			@make -C ../push_swap
+			@make -C ./$(PUSH_SWAP)
 			$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBS)
 			printf "$(WHT)[$(GRN)$(NAME) COMPILED$(WHT)]\n"
 
@@ -64,12 +66,12 @@ all:		$(NAME)
 clean:
 			$(RM) $(OBJS)
 			printf "$(WHT)[$(YEL)$(NAME) OBJS REMOVED$(WHT)]\n"
-			@make miniclean -C ../push_swap
+			@make miniclean -C ./$(PUSH_SWAP)
 
 fclean:		clean
 			$(RM) $(NAME)
 			printf "$(WHT)[$(YEL)$(NAME) BINARIES REMOVED$(WHT)]\n"
-			@make fclean -C ../push_swap
+			@make fclean -C ./$(PUSH_SWAP)
 
 re:			fclean all
 
