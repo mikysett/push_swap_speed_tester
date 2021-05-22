@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/21 14:36:30 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/22 18:01:36 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # define CLR_GREEN	"\033[0;32m"
 # define CLR_YELLOW	"\033[0;33m"
 
-# define CELL_SIZE	20
-# define BUF_SIZE	10000
+# define CELL_SIZE		20
+# define BUF_SIZE		10000000
+# define OP_STR_SIZE	4000000
 
 # include <stdio.h>
 # include <fcntl.h>

@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/21 23:05:55 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/22 18:29:22 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	ft_get_test_input(char *file_name, char **out)
 {
 	int			fd;
 	static char	full_test[1028];
+	size_t		out_size;
 
 	full_test[0] = '\0';
 	strcat(full_test, "tests/");
@@ -51,47 +52,47 @@ static void	ft_get_test_input(char *file_name, char **out)
 	fd = open(full_test, O_RDONLY);
 	get_next_line(fd, out);
 	close(fd);
+	out_size = strlen(*out);
+	if (out_size >= BUF_SIZE)
+	{
+		printf(CLR_RED);
+		printf("\n!The size of the test (%lu) exceeds the buffer size!\n", out_size);
+		printf("-> Increment BUF_SIZE accordingly in headers/speed_tester.h\n");
+		printf(CLR_WHITE);
+	}
 }
-
 
 static char	*ft_save_ps_output(char *command)
 {
+	
 	char		*output;
-	char		buf[BUF_SIZE];
 	size_t		read_result;
 	long long	output_size;
 	FILE		*process;
 
-	output_size = 0;
-
+	output = malloc(sizeof(char) * (OP_STR_SIZE + 1));
 	process = popen(command, "r");
-	read_result = fread(buf, 1, BUF_SIZE, process);
+	read_result = fread(output, 1, OP_STR_SIZE, process);
 	if (read_result > 0)
-		output_size += read_result;
-	while (read_result > 0)
-	{
-		read_result = fread(buf, 1, BUF_SIZE, process);
-		if (read_result > 0)
-			output_size += read_result;
-	}
+		output_size = read_result;
+	else
+		output_size = 0;
 	pclose(process);
-	output = malloc(sizeof(char) * (output_size + 1));
 	output[output_size] = '\0';
-
-	if (output_size > 0)
+	if (output_size == OP_STR_SIZE)
 	{
-		process = popen(command, "r");
-		fread(output, 1, output_size, process);
-		pclose(process);
+		printf(CLR_RED);
+		printf("\n!The size of the push_swap output exceeds the buffer size!\n");
+		printf("-> Increment OP_STR_SIZE accordingly in headers/speed_tester.h\n");
+		printf(CLR_WHITE);
 	}
 	return (output);
 }
 
-t_check	ft_do_check(char *input, char *ps_output)
+t_check	ft_do_check(char *input, char *ps_output, char *command)
 {
 	FILE		*process;
 	FILE		*checker_buffer;
-	static char	command[4000096];
 	char		checker_res[11];
 	int			read_res;
 
@@ -140,12 +141,6 @@ void	ft_set_wins(t_result *result, int nb_progs)
 	i = 0;
 	while (i < nb_progs)
 	{
-		// if (result->checker[i] == check_error
-		// 	&& result->nb_moves[i] == -1)
-		// {
-		// 	result->is_winner[i] = true;
-		// 	result->tot_wins[i]++;
-		// }
 		if (result->checker[i] == check_ok
 			&& result->nb_moves[i] == best_score)
 		{
@@ -164,12 +159,12 @@ void	ft_run_tests(t_result *result,
 		int nb_tests,
 		int nb_progs)
 {
-	int		i;
-	int		j;
-	char	*test_input;
-	char	full_prog[1028];
-	char	command[4000096];
-	char	*ps_output;
+	int			i;
+	int			j;
+	char		*test_input;
+	char		full_prog[1028];
+	static char	command[BUF_SIZE + 500];
+	char		*ps_output;
 
 	i = 0;
 	ft_print_header(prog_files, nb_progs);
@@ -195,7 +190,7 @@ void	ft_run_tests(t_result *result,
 				result->ratio[j] = (float)result->nb_moves[j] / result->nb_args;
 			else
 				result->ratio[j] = 0;
-			result->checker[j] = ft_do_check(test_input, ps_output);
+			result->checker[j] = ft_do_check(test_input, ps_output, command);
 			free(ps_output);
 			j++;
 		}
