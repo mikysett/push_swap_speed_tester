@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:36:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/21 14:21:53 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/22 15:24:35 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ char	**ft_files_in_dir(char *path)
 		{
 			while ((file_name = readdir(src_dir)))
 			{
-				if (!strcmp (file_name->d_name, ".")
-					|| !strcmp (file_name->d_name, ".."))
+				if (file_name->d_name[0] == '.')
 					continue;
 				strcat(src_files, file_name->d_name);
 				strcat(src_files, "#");

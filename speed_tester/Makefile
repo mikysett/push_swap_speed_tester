@@ -6,7 +6,7 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/21 23:10:00 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/22 17:03:24 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ DEPS	=	$(shell find $(HEADERS) -name *.h)
 
 CC		=	gcc
 
-CFLAGS	=	-Wall -Wextra
+CFLAGS	=	-O3 -Wall -Wextra
 
 INCLUDES	= -I $(HEADERS) -I ./$(PUSH_SWAP)/headers -I ./$(LIBFT)
 
@@ -57,7 +57,7 @@ $(DIR_O)/%.o: %.c
 			$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 $(NAME):	$(DEPS) $(OBJS)
-			@make -C ./$(PUSH_SWAP)
+			@make fast -C ./$(PUSH_SWAP)
 			$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBS)
 			mv -f ./$(PUSH_SWAP)/checker ./checker
 			printf "$(WHT)[$(GRN)$(NAME) COMPILED$(WHT)]\n"
