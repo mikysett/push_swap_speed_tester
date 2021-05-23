@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/22 18:29:22 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/23 01:35:37 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,13 @@ static void	ft_get_test_input(char *file_name, char **out)
 	}
 }
 
-static char	*ft_save_ps_output(char *command)
+static void	ft_save_ps_output(char *command, char *output)
 {
 	
-	char		*output;
 	size_t		read_result;
 	long long	output_size;
 	FILE		*process;
 
-	output = malloc(sizeof(char) * (OP_STR_SIZE + 1));
 	process = popen(command, "r");
 	read_result = fread(output, 1, OP_STR_SIZE, process);
 	if (read_result > 0)
@@ -86,7 +84,6 @@ static char	*ft_save_ps_output(char *command)
 		printf("-> Increment OP_STR_SIZE accordingly in headers/speed_tester.h\n");
 		printf(CLR_WHITE);
 	}
-	return (output);
 }
 
 t_check	ft_do_check(char *input, char *ps_output, char *command)
@@ -167,6 +164,12 @@ void	ft_run_tests(t_result *result,
 	char		*ps_output;
 
 	i = 0;
+	ps_output = malloc(sizeof(char) * (OP_STR_SIZE + 1));
+	if (!ps_output)
+	{
+		printf("Failed to allocate memory for ps_output, quiting");
+		exit(EXIT_FAILURE);
+	}
 	ft_print_header(prog_files, nb_progs);
 	while (i < nb_tests)
 	{
@@ -184,14 +187,13 @@ void	ft_run_tests(t_result *result,
 			strcat(command, full_prog);
 			strcat(command, " 2>&1 ");
 			strcat(command, test_input);
-			ps_output = ft_save_ps_output(command);
+			ft_save_ps_output(command, ps_output);
 			result->nb_moves[j] = ft_count_moves(ps_output);
 			if (result->nb_moves[j] > 0)
 				result->ratio[j] = (float)result->nb_moves[j] / result->nb_args;
 			else
 				result->ratio[j] = 0;
 			result->checker[j] = ft_do_check(test_input, ps_output, command);
-			free(ps_output);
 			j++;
 		}
 		free(test_input);
@@ -200,5 +202,6 @@ void	ft_run_tests(t_result *result,
 		printf("\n");
 		i++;
 	}
+	free(ps_output);
 	ft_print_totals(result, nb_tests, nb_progs);
 }
