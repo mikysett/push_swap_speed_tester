@@ -6,7 +6,7 @@
 #    By: msessa <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/23 11:32:44 by msessa            #+#    #+#              #
-#    Updated: 2021/05/23 01:39:52 by msessa           ###   ########.fr        #
+#    Updated: 2021/05/23 21:00:26 by msessa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ DEPS	=	$(shell find $(HEADERS) -name *.h)
 
 CC		=	gcc
 
-CFLAGS	=	-O3 -Wall -Wextra
+CFLAGS	=	-O3 -Wall -Wextra -fsanitize=address
 
 INCLUDES	= -I $(HEADERS) -I ./$(PUSH_SWAP)/headers -I ./$(LIBFT)
 

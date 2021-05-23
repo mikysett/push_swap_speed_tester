@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/23 01:35:37 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/23 21:22:44 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,28 @@ static void	ft_print_totals(t_result *result, int nb_tests, int nb_progs)
 	int	i;
 
 	i = 0;
-	printf("    %*s|", CELL_SIZE, "TOTALS");
+	printf("    %*s|", CELL_SIZE, "TOTAL WINS");
 	while (i < nb_progs)
 	{
-		printf("%*d / %3d|", CELL_SIZE - 6, result->tot_wins[i], nb_tests);
+		printf("%*d/%3d|", CELL_SIZE - 4, result->tot_wins[i], nb_tests);
+		i++;
+	}
+	printf("\n");
+	i = 0;
+	printf("    %*s|", CELL_SIZE, "AVG POSITION");
+	while (i < nb_progs)
+	{
+		printf("%*s%-*.1f|", CELL_SIZE / 2, "",
+			CELL_SIZE / 2, (float)result->pos_sum[i] / result->tot_tests[i]);
+		i++;
+	}
+	printf("\n");
+	i = 0;
+	printf("    %*s|", CELL_SIZE, "TOT TIME");
+	while (i < nb_progs)
+	{
+		printf("%*ds|", CELL_SIZE - 1,
+			result->tot_time[i]);
 		i++;
 	}
 	printf("\n");
@@ -62,13 +80,15 @@ static void	ft_get_test_input(char *file_name, char **out)
 	}
 }
 
-static void	ft_save_ps_output(char *command, char *output)
+static void	ft_save_ps_output(char *command, char *output, int *tot_time)
 {
-	
 	size_t		read_result;
 	long long	output_size;
 	FILE		*process;
+	time_t		time_start;
+	time_t		time_end;
 
+	time_start = time(NULL);
 	process = popen(command, "r");
 	read_result = fread(output, 1, OP_STR_SIZE, process);
 	if (read_result > 0)
@@ -76,6 +96,8 @@ static void	ft_save_ps_output(char *command, char *output)
 	else
 		output_size = 0;
 	pclose(process);
+	time_end = time(NULL);
+	*tot_time += time_end - time_start;
 	output[output_size] = '\0';
 	if (output_size == OP_STR_SIZE)
 	{
@@ -120,33 +142,31 @@ t_check	ft_do_check(char *input, char *ps_output, char *command)
 		return (check_void);
 }
 
-void	ft_set_wins(t_result *result, int nb_progs)
+void	ft_set_pos(t_result *result, int nb_progs)
 {
 	int			i;
-	long long	best_score;
-
-	best_score = -2;
-	i = 0;
-	while (i < nb_progs)
+	int			j;
+	long long	score_sel;
+	
+	i = -1;
+	while (++i < nb_progs)
 	{
-		if (best_score == -2
-			|| (result->checker[i] == check_ok
-			&& result->nb_moves[i] < best_score))
-			best_score = result->nb_moves[i];
-		i++;
-	}
-	i = 0;
-	while (i < nb_progs)
-	{
-		if (result->checker[i] == check_ok
-			&& result->nb_moves[i] == best_score)
+		if (result->checker[i] != check_ok)
+			continue;
+		result->pos[i] = 1;
+		score_sel = result->nb_moves[i];
+		j = -1;
+		while(++j < nb_progs)
 		{
-			result->is_winner[i] = true;
-			result->tot_wins[i]++;
+			if (j == i || result->checker[j] != check_ok)
+				continue;
+			if (score_sel > result->nb_moves[j])
+				result->pos[i]++;
 		}
-		else
-			result->is_winner[i] = false;
-		i++;
+		if (result->pos[i] == 1)
+			result->tot_wins[i]++;
+		result->tot_tests[i]++;
+		result->pos_sum[i] += result->pos[i];
 	}
 }
 
@@ -187,7 +207,7 @@ void	ft_run_tests(t_result *result,
 			strcat(command, full_prog);
 			strcat(command, " 2>&1 ");
 			strcat(command, test_input);
-			ft_save_ps_output(command, ps_output);
+			ft_save_ps_output(command, ps_output, &result->tot_time[j]);
 			result->nb_moves[j] = ft_count_moves(ps_output);
 			if (result->nb_moves[j] > 0)
 				result->ratio[j] = (float)result->nb_moves[j] / result->nb_args;
@@ -197,7 +217,7 @@ void	ft_run_tests(t_result *result,
 			j++;
 		}
 		free(test_input);
-		ft_set_wins(result, nb_progs);
+		ft_set_pos(result, nb_progs);
 		ft_print_line(result, nb_progs);
 		printf("\n");
 		i++;

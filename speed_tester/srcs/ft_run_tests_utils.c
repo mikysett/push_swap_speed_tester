@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:37:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/21 14:52:00 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/23 20:38:12 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_print_line(t_result *result, int nb_progs)
 			|| (result->checker[i] == check_error
 				&& result->nb_moves[i] != -1))
 			printf(CLR_RED);
-		else if (result->is_winner[i] == true)
+		else if (result->pos[i] == 1)
 			printf(CLR_GREEN);
 		if (result->nb_moves[i] == -1)
 			printf("%*s ", CELL_SIZE - 5, "ERROR");

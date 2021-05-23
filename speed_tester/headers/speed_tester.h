@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/22 18:01:36 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/23 20:55:01 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <time.h>
 
 # include "libft.h"
 # include "gnl.h"
@@ -59,7 +60,10 @@ typedef struct	s_result
 	long long	*nb_moves;
 	float		*ratio;
 	int			*tot_wins;
-	bool		*is_winner;
+	int			*pos;
+	int			*pos_sum;
+	int			*tot_tests;
+	int			*tot_time;
 	t_check		*checker;
 }				t_result;
 
