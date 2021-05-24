@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/24 11:49:22 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/24 17:49:48 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	ft_get_test_input(char *file_name, char **out)
 	}
 }
 
-static void	ft_save_ps_output(char *command, char *output, int *prog_time, int *tot_time)
+static void	ft_save_ps_output(char *command, char *output, t_result *r, int i)
 {
 	size_t		read_result;
 	long long	output_size;
@@ -93,8 +93,8 @@ static void	ft_save_ps_output(char *command, char *output, int *prog_time, int *
 		output_size = 0;
 	pclose(process);
 	time_end = time(NULL);
-	*prog_time = time_end - time_start;
-	*tot_time += *prog_time;
+	r->prog_time[i] = time_end - time_start;
+	r->tot_time[i] += r->prog_time[i];
 	output[output_size] = '\0';
 	if (output_size == OP_STR_SIZE)
 	{
@@ -167,6 +167,23 @@ void	ft_set_pos(t_result *result, int nb_progs)
 	}
 }
 
+static void	ft_set_command(char *cmd, char *prog_name, char *input)
+{
+	static char	full_prog[1028];
+
+	full_prog[0] = '\0';
+	strcat(full_prog, "prog_to_test/");
+	strcat(full_prog, prog_name);
+	cmd[0] = '\0';
+	strcat(cmd, "timeout ");
+	strcat(cmd, TIMEOUT);
+	strcat(cmd, " ");
+	strcat(cmd, "./");
+	strcat(cmd, full_prog);
+	strcat(cmd, " 2>&1 ");
+	strcat(cmd, input);
+}
+
 void	ft_run_tests(t_result *result,
 		char **test_files,
 		char **prog_files,
@@ -176,10 +193,11 @@ void	ft_run_tests(t_result *result,
 	int			i;
 	int			j;
 	char		*test_input;
-	char		full_prog[1028];
 	static char	command[BUF_SIZE + 500];
 	char		*ps_output;
+	int			timeout;
 
+	timeout = atoi(TIMEOUT);
 	i = 0;
 	ps_output = malloc(sizeof(char) * (OP_STR_SIZE + 1));
 	if (!ps_output)
@@ -196,24 +214,19 @@ void	ft_run_tests(t_result *result,
 		j = 0;
 		while (j < nb_progs)
 		{
-			full_prog[0] = '\0';
-			strcat(full_prog, "prog_to_test/");
-			strcat(full_prog, prog_files[j]);
-			command[0] = '\0';
-			strcat(command, "./");
-			strcat(command, full_prog);
-			strcat(command, " 2>&1 ");
-			strcat(command, test_input);
-			ft_save_ps_output(command,
-				ps_output,
-				&result->prog_time[j],
-				&result->tot_time[j]);
-			result->nb_moves[j] = ft_count_moves(ps_output);
-			if (result->nb_moves[j] > 0)
-				result->ratio[j] = (float)result->nb_moves[j] / result->nb_args;
+			ft_set_command(command, prog_files[j], test_input);
+			ft_save_ps_output(command, ps_output, result, j);
+			if (result->prog_time[j] < timeout)
+			{
+				result->nb_moves[j] = ft_count_moves(ps_output);
+				if (result->nb_moves[j] > 0)
+					result->ratio[j] = (float)result->nb_moves[j] / result->nb_args;
+				else
+					result->ratio[j] = 0;
+				result->checker[j] = ft_do_check(test_input, ps_output, command);
+			}
 			else
-				result->ratio[j] = 0;
-			result->checker[j] = ft_do_check(test_input, ps_output, command);
+				result->checker[j] = check_ko;
 			j++;
 		}
 		free(test_input);

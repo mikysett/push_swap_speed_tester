@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:37:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/24 11:40:12 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/24 17:36:50 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,43 @@ long long	ft_count_moves(char *s)
 void	ft_print_line(t_result *result, int nb_progs)
 {
 	int	i;
+	int	timeout;
 
 	i = 0;
+	timeout = atoi(TIMEOUT);
 	while (i < nb_progs)
 	{
-		if (result->checker[i] == check_ko
-			|| (result->checker[i] == check_error
-				&& result->nb_moves[i] != -1))
-			printf(CLR_RED);
-		else if (result->pos[i] == 1)
-			printf(CLR_GREEN);
-		if (result->nb_moves[i] == -1)
-			printf("%*s ", CELL_SIZE - 9, "ERROR");
+		if (result->prog_time[i] >= timeout)
+			printf("%s%*s", CLR_RED, CELL_SIZE - 4, "TIMEOUT");
 		else
-			printf(" x%-4.1f %*lld ",
-				result->ratio[i],
-				CELL_SIZE - 16,
-				result->nb_moves[i]);
-		if (result->checker[i] == check_ok)
-			printf("[OK]");
-		else if (result->checker[i] == check_ko)
-			printf("[KO]");
-		else if(result->checker[i] == check_error)
 		{
-			printf(CLR_YELLOW);
-			printf("[ER]");
-		}
-		else if(result->checker[i] == check_void)
-		{
-			printf(CLR_YELLOW);
-			printf("[__]");
+			if (result->checker[i] == check_ko
+				|| (result->checker[i] == check_error
+					&& result->nb_moves[i] != -1))
+				printf(CLR_RED);
+			else if (result->pos[i] == 1)
+				printf(CLR_GREEN);
+			if (result->nb_moves[i] == -1)
+				printf("%*s ", CELL_SIZE - 9, "ERROR");
+			else
+				printf(" x%-4.1f %*lld ",
+					result->ratio[i],
+					CELL_SIZE - 16,
+					result->nb_moves[i]);
+			if (result->checker[i] == check_ok)
+				printf("[OK]");
+			else if (result->checker[i] == check_ko)
+				printf("[KO]");
+			else if(result->checker[i] == check_error)
+			{
+				printf(CLR_YELLOW);
+				printf("[ER]");
+			}
+			else if(result->checker[i] == check_void)
+			{
+				printf(CLR_YELLOW);
+				printf("[__]");
+			}
 		}
 		printf(CLR_GRAY);
 		printf("%3ds", result->prog_time[i]);
