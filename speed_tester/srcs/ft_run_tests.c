@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/23 21:22:44 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/24 11:49:22 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,13 @@ static void	ft_print_totals(t_result *result, int nb_tests, int nb_progs)
 	printf("    %*s|", CELL_SIZE, "AVG POSITION");
 	while (i < nb_progs)
 	{
-		printf("%*s%-*.1f|", CELL_SIZE / 2, "",
-			CELL_SIZE / 2, (float)result->pos_sum[i] / result->tot_tests[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	printf("    %*s|", CELL_SIZE, "TOT TIME");
-	while (i < nb_progs)
-	{
-		printf("%*ds|", CELL_SIZE - 1,
-			result->tot_time[i]);
+		printf("%*s%-*.1f%s%3ds%s|",
+			(CELL_SIZE - 4) / 2, "",
+			(CELL_SIZE - 4) / 2,
+			(float)result->pos_sum[i] / result->tot_tests[i],
+			CLR_GRAY,
+			result->tot_time[i],
+			CLR_WHITE);
 		i++;
 	}
 	printf("\n");
@@ -80,7 +76,7 @@ static void	ft_get_test_input(char *file_name, char **out)
 	}
 }
 
-static void	ft_save_ps_output(char *command, char *output, int *tot_time)
+static void	ft_save_ps_output(char *command, char *output, int *prog_time, int *tot_time)
 {
 	size_t		read_result;
 	long long	output_size;
@@ -97,7 +93,8 @@ static void	ft_save_ps_output(char *command, char *output, int *tot_time)
 		output_size = 0;
 	pclose(process);
 	time_end = time(NULL);
-	*tot_time += time_end - time_start;
+	*prog_time = time_end - time_start;
+	*tot_time += *prog_time;
 	output[output_size] = '\0';
 	if (output_size == OP_STR_SIZE)
 	{
@@ -207,7 +204,10 @@ void	ft_run_tests(t_result *result,
 			strcat(command, full_prog);
 			strcat(command, " 2>&1 ");
 			strcat(command, test_input);
-			ft_save_ps_output(command, ps_output, &result->tot_time[j]);
+			ft_save_ps_output(command,
+				ps_output,
+				&result->prog_time[j],
+				&result->tot_time[j]);
 			result->nb_moves[j] = ft_count_moves(ps_output);
 			if (result->nb_moves[j] > 0)
 				result->ratio[j] = (float)result->nb_moves[j] / result->nb_args;

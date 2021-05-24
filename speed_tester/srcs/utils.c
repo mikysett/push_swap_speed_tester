@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:36:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/23 21:23:58 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/24 11:28:26 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_init_result(int nb_progs, t_result *result)
 	result->pos = malloc(sizeof(int) * nb_progs);
 	result->pos_sum = malloc(sizeof(int) * nb_progs);
 	result->tot_tests = malloc(sizeof(int) * nb_progs);
+	result->prog_time = malloc(sizeof(int) * nb_progs);
 	result->tot_time = malloc(sizeof(int) * nb_progs);
 	result->checker = malloc(sizeof(t_check) * nb_progs);
 	i = 0;
@@ -33,6 +34,7 @@ void	ft_init_result(int nb_progs, t_result *result)
 		result->pos[i] = 0;
 		result->pos_sum[i] = 0;
 		result->tot_tests[i] = 0;
+		result->prog_time[i] = 0;
 		result->tot_time[i] = 0;
 		i++;
 	}
@@ -46,6 +48,7 @@ void	ft_free_all(t_result *result, char **test_files, char **prog_files)
 	free(result->pos);
 	free(result->pos_sum);
 	free(result->tot_tests);
+	free(result->prog_time);
 	free(result->tot_time);
 	free(result->checker);
 	ft_free_split(test_files);

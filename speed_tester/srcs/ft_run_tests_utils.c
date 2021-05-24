@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:37:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/23 20:38:12 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/24 11:40:12 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	ft_print_line(t_result *result, int nb_progs)
 		else if (result->pos[i] == 1)
 			printf(CLR_GREEN);
 		if (result->nb_moves[i] == -1)
-			printf("%*s ", CELL_SIZE - 5, "ERROR");
+			printf("%*s ", CELL_SIZE - 9, "ERROR");
 		else
 			printf(" x%-4.1f %*lld ",
 				result->ratio[i],
-				CELL_SIZE - 12,
+				CELL_SIZE - 16,
 				result->nb_moves[i]);
 		if (result->checker[i] == check_ok)
 			printf("[OK]");
@@ -78,6 +78,8 @@ void	ft_print_line(t_result *result, int nb_progs)
 			printf(CLR_YELLOW);
 			printf("[__]");
 		}
+		printf(CLR_GRAY);
+		printf("%3ds", result->prog_time[i]);
 		printf(CLR_WHITE);
 		printf("|");
 		i++;

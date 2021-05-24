@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/23 20:55:01 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/24 11:42:22 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 # define CLR_WHITE	"\033[0;37m"
 # define CLR_BLACK	"\033[0;30m"
+# define CLR_GRAY	"\033[30;1m"
 # define CLR_RED	"\033[0;31m"
 # define CLR_GREEN	"\033[0;32m"
 # define CLR_YELLOW	"\033[0;33m"
 
-# define CELL_SIZE		20
+# define CELL_SIZE		24
 # define BUF_SIZE		10000000
 # define OP_STR_SIZE	4000000
 
@@ -63,6 +64,7 @@ typedef struct	s_result
 	int			*pos;
 	int			*pos_sum;
 	int			*tot_tests;
+	int			*prog_time;
 	int			*tot_time;
 	t_check		*checker;
 }				t_result;
