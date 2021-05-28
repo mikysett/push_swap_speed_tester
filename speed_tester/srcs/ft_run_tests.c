@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/24 17:49:48 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/28 16:55:02 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ static void	ft_save_ps_output(char *command, char *output, t_result *r, int i)
 	r->prog_time[i] = time_end - time_start;
 	r->tot_time[i] += r->prog_time[i];
 	output[output_size] = '\0';
+	// If the program test results are unexpected you can
+	// comment out this code to see push_swap output
+	// printf("output:%s\n", output);
 	if (output_size == OP_STR_SIZE)
 	{
 		printf(CLR_RED);
@@ -175,7 +178,8 @@ static void	ft_set_command(char *cmd, char *prog_name, char *input)
 	strcat(full_prog, "prog_to_test/");
 	strcat(full_prog, prog_name);
 	cmd[0] = '\0';
-	strcat(cmd, "timeout ");
+	strcat(cmd, TIMEOUT_CMD);
+	strcat(cmd, " ");
 	strcat(cmd, TIMEOUT);
 	strcat(cmd, " ");
 	strcat(cmd, "./");

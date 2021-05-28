@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/24 17:33:28 by msessa           ###   ########.fr       */
+/*   Updated: 2021/05/28 16:49:06 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # define CELL_SIZE		24
 # define BUF_SIZE		10000000
 # define OP_STR_SIZE	4000000
+// For mac OS (after installing it with: brew install coreutils)
+# define TIMEOUT_CMD	"gtimeout"
+// For linux (comment this line if you are on mac OS)
+// # define TIMEOUT_CMD	"timeout"
 # define TIMEOUT		"5"
 
 # include <stdio.h>
