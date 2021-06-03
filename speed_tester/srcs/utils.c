@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:36:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/24 17:45:32 by msessa           ###   ########.fr       */
+/*   Updated: 2021/06/02 00:00:31 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ft_free_all(t_result *result, char **test_files, char **prog_files)
 	free(result->prog_time);
 	free(result->tot_time);
 	free(result->checker);
+	free(result->tests_path);
+	free(result->progs_path);
 	ft_free_split(test_files);
 	ft_free_split(prog_files);
 }

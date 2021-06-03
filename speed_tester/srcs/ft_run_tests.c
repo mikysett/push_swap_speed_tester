@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 11:44:31 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/30 18:12:39 by msessa           ###   ########.fr       */
+/*   Updated: 2021/06/02 00:00:04 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ static void	ft_print_totals(t_result *result, int nb_tests, int nb_progs)
 	printf("\n");
 }
 
-static void	ft_get_test_input(char *file_name, char **out)
+static void	ft_get_test_input(t_result *r, char *file_name, char **out)
 {
 	int			fd;
 	static char	full_test[1028];
 	size_t		out_size;
 
 	full_test[0] = '\0';
-	strcat(full_test, "tests/");
+	strcat(full_test, r->tests_path);
 	strcat(full_test, file_name);
 	fd = open(full_test, O_RDONLY);
 	get_next_line(fd, out);
@@ -170,12 +170,12 @@ void	ft_set_pos(t_result *result, int nb_progs)
 	}
 }
 
-static void	ft_set_command(char *cmd, char *prog_name, char *input)
+static void	ft_set_command(t_result *r, char *cmd, char *prog_name, char *input)
 {
 	static char	full_prog[1028];
 
 	full_prog[0] = '\0';
-	strcat(full_prog, "prog_to_test/");
+	strcat(full_prog, r->progs_path);
 	strcat(full_prog, prog_name);
 	cmd[0] = '\0';
 	strcat(cmd, TIMEOUT_CMD);
@@ -212,13 +212,13 @@ void	ft_run_tests(t_result *result,
 	ft_print_header(prog_files, nb_progs);
 	while (i < nb_tests)
 	{
-		ft_get_test_input(test_files[i], &test_input);
+		ft_get_test_input(result, test_files[i], &test_input);
 		result->nb_args = ft_count_args(test_input);
 		printf("    %-*.*s|", CELL_SIZE, CELL_SIZE, test_files[i]);
 		j = 0;
 		while (j < nb_progs)
 		{
-			ft_set_command(command, prog_files[j], test_input);
+			ft_set_command(result, command, prog_files[j], test_input);
 			ft_save_ps_output(command, ps_output, result, j);
 			if (result->prog_time[j] < timeout)
 			{

@@ -6,7 +6,7 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:37:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/06/01 19:09:49 by msessa           ###   ########.fr       */
+/*   Updated: 2021/06/01 23:43:44 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,22 @@
 int	ft_count_args(char *s)
 {
 	long long	nb_args;
+	bool		is_separator;
 
 	nb_args = 0;
+	is_separator = false;
 	while (*s != '\0')
 	{
-		if (*s == ' ')
+		if (*s != ' ')
+			is_separator = true;
+		else if (is_separator)
+		{
+			is_separator = false;
 			nb_args++;
+		}
 		s++;
 	}
-	if (nb_args != 0)
+	if (is_separator)
 		nb_args++;
 	return (nb_args);
 }

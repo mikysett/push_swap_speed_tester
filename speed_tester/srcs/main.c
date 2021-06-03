@@ -6,14 +6,14 @@
 /*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:37:16 by msessa            #+#    #+#             */
-/*   Updated: 2021/05/21 14:22:38 by msessa           ###   ########.fr       */
+/*   Updated: 2021/06/01 23:58:37 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "speed_tester.h"
 
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	char		**test_files;
 	char		**prog_files;
@@ -23,8 +23,16 @@ int	main(void)
 
 	// To fix color changes giving different shades of white
 	printf(CLR_WHITE);
-	test_files = ft_files_in_dir("tests/");
-	prog_files = ft_files_in_dir("prog_to_test/");
+	if (argc > 1)
+		result.tests_path = ft_strdup(argv[1]);
+	else
+		result.tests_path = ft_strdup("tests/");
+	if (argc > 2)
+		result.progs_path = ft_strdup(argv[2]);
+	else
+		result.progs_path = ft_strdup("prog_to_test/");
+	test_files = ft_files_in_dir(result.tests_path);
+	prog_files = ft_files_in_dir(result.progs_path);
 	nb_tests = ft_count_split(test_files);
 	nb_progs = ft_count_split(prog_files);
 
