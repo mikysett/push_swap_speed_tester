@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   speed_tester.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msessa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: msessa <mikysett@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 19:38:14 by msessa            #+#    #+#             */
-/*   Updated: 2021/06/02 18:16:26 by msessa           ###   ########.fr       */
+/*   Updated: 2021/06/28 13:50:52 by msessa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # define BUF_SIZE		10000000
 # define OP_STR_SIZE	4000000
 // For mac OS (after installing it with: brew install coreutils)
-// # define TIMEOUT_CMD	"gtimeout"
+# define TIMEOUT_CMD	"gtimeout"
 // For linux (comment this line if you are on mac OS)
-# define TIMEOUT_CMD	"timeout"
-# define TIMEOUT		"10"
+// # define TIMEOUT_CMD	"timeout"
+# define TIMEOUT		"20"
 
 # include <stdio.h>
 # include <fcntl.h>
